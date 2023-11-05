@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    private GridSystem grid,
-        grid2;
-    int count = 0;
+    [SerializeField]
+    private HeatMapVisual heatMapVisual;
+
+    private GridSystem grid;
 
     private void Start()
     {
-        grid = new GridSystem(3, 4, 10f, new Vector3(20, 0, 0));
-        grid2 = new GridSystem(5, 6, 5f, new Vector3(-20, 10));
+        grid = new GridSystem(20, 10, 10f, Vector3.zero);
+        heatMapVisual.SetGrid(grid);
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            grid.SetValue(utils.GetMouseWorldPosition(0), ++count);
-            grid2.SetValue(utils.GetMouseWorldPosition(0), ++count);
+            Vector3 position = utils.GetMouseWorldPosition(0);
+            int value = grid.GetValue(position);
+            grid.SetValue(position, value + 5);
         }
     }
 }
